@@ -325,7 +325,8 @@ class BuildInfo(object):
   def WriteDeviceAssertions(self, script, oem_no_mount):
     # Read the property directly if not using OEM properties.
     if not self.oem_props:
-      script.AssertDevice(self.device)
+      print (
+	  "dummy")
       return
 
     # Otherwise assert OEM properties.
@@ -745,7 +746,6 @@ def WriteFullOTAPackage(input_zip, output_file):
   # Assertions (e.g. downgrade check, device properties check).
   ts = target_info.GetBuildProp("ro.build.date.utc")
   ts_text = target_info.GetBuildProp("ro.build.date")
-  script.AssertOlderBuild(ts, ts_text)
 
   target_info.WriteDeviceAssertions(script, OPTIONS.oem_no_mount)
   device_specific.FullOTA_Assertions()
