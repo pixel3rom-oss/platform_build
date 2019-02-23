@@ -16,9 +16,17 @@ ifneq ($(LOCAL_SRC_FILES),)
 endif
 
 ifeq ($(LOCAL_RRO_THEME),)
-  LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/overlay
+  ifneq ($(BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE),)
+    LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/overlay
+  else
+    LOCAL_MODULE_PATH := $(PRODUCT_OUT)/system/app
+  endif
 else
-  LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/overlay/$(LOCAL_RRO_THEME)
+  ifneq ($(BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE),)
+    LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/overlay/$(LOCAL_RRO_THEME)
+  else
+    LOCAL_MODULE_PATH := $(PRODUCT_OUT)/system/app/$(LOCAL_RRO_THEME)
+  endif
 endif
 
 include $(BUILD_SYSTEM)/package.mk
